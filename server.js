@@ -26,7 +26,7 @@ if(env === 'development') {
 }
 
 else {
-	MONGO_URL = "mongodb://yogesh:yogesh180592@@kahana.mongohq.com:10083/gottago";
+	MONGO_URL = "mongodb://yogesh:yogesh180592@kahana.mongohq.com:10083/gottago";
 }
 
 //Connecting to mongodb
