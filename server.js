@@ -21,12 +21,12 @@ app.use(bodyParser.urlencoded({
 }));
 
 //Setting up mongodb connection
-if(env == 'development') {
+if(env === 'development') {
 	MONGO_URL = "mongodb://localhost/gottago";
 }
 
 else {
-	MONGO_URL = "mongodb://yogesh:yogesh180592@server.compose.io:10034/gottago";
+	MONGO_URL = "mongodb://yogesh:yogesh180592@@kahana.mongohq.com:10083/gottago";
 }
 
 //Connecting to mongodb
