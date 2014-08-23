@@ -6,8 +6,6 @@ var bodyParser = require('body-parser');
 var logger = require('morgan');
 var Toilet =  require('./models/toilet');
 
-var MONGO_URL;
-
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 var app = express();
@@ -20,14 +18,7 @@ app.use(bodyParser.urlencoded({
 	extended: true
 }));
 
-//Setting up mongodb connection
-if(env === 'development') {
-	MONGO_URL = "mongodb://localhost/gottago";
-}
-
-else {
-	MONGO_URL = "mongodb://yogesh:yogesh180592@kahana.mongohq.com:10083/gottago";
-}
+var MONGO_URL = "mongodb://yogesh:yogesh180592@kahana.mongohq.com:10083/gottago";	
 
 //Connecting to mongodb
 mongoose.connect(MONGO_URL);
