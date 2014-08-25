@@ -5,7 +5,8 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var logger = require('morgan');
 var Toilet =  require('./models/toilet');
-var toiletController = require('/controllers/toiletController');
+var toiletController = require('./controllers/toiletController');
+var userController = require('./controllers/userController');
 
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
@@ -56,6 +57,12 @@ router.route('/toilets/:toilet_id')
 //Create endpoint handler for /toilets/:toilet_id/addrating
 router.route('/toilets/:toilet_id/addrating')
 	.post(toiletController.addRating);
+
+//Create endpoint handler for /users/
+router.route('/users')
+	.post(userController.postUsers)
+	.get(userController.getusers);
+
 
 app.use('/api', router);
 
