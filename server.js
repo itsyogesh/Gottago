@@ -32,7 +32,7 @@ var MONGO_URL = "mongodb://yogesh:yogesh180592@kahana.mongohq.com:10083/gottago"
 var LOCAL_URL = "mongodb://localhost/gottago";
 
 //Connecting to mongodb
-mongoose.connect(MONGO_URL);
+mongoose.connect(LOCAL_URL);
 
 //Getting db connection
 var db = mongoose.connection;
