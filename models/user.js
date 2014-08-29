@@ -4,6 +4,11 @@ var bcrypt = require('bcrypt-nodejs');
 
 //Define our user schema
 var UserSchema = new mongoose.Schema({
+	username : {
+		type: String,
+		unique: true,
+		required: true
+	},
 	email : {
 		type: String, 
 		unique: true,
@@ -35,6 +40,16 @@ UserSchema.pre('save', function(callback){
 		});
 	});
 });
+
+UserSchema.methods.verifyPassword = function(password, cb){
+	bcrypt.compare(password, this.password, function(err, isMatch){
+		if(err)
+			return cb(err);
+
+		cb(null, isMatch);
+	});
+};
+
 
 //Export the mongoose module
 module.exports = mongoose.model('User', UserSchema);

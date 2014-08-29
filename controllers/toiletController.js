@@ -17,12 +17,12 @@ exports.postToilets = function(req, res){
 
 	var hours = {
 		open_time : req.body.open_time,
-		close_time : req.body.close_time;
+		close_time : req.body.close_time
 	}
 
 	var edited_by = {
 		userId : req.user._id,
-		time : Date.now();
+		time : Date.now()
 	}
 
 	toilet.name = req.body.name;
@@ -115,18 +115,38 @@ exports.updateToilet = function(req, res){
 			toilet.hours[0].close_time = req.body.close_time;
 
 		//Adding images to the toilet
-		var image = {
-			url: req.body.image_url
-		}
+		if(req.body.image_url){
+			var image = {
+				url: req.body.image_url
+			}
 
-		if(image){
 			toilet.images.push(image);
+		}		
+
+		if(req.body.rating || req.body.comment){
+			var rating = {
+				userId : req.user._id,
+				comment : req.body.comment,
+				rating : parseInt(req.body.rating)
+			}
+
+			toilet.ratings.push(rating);
+				//Updating overall_rating
+			var sum=0, no_of_ratings=0;
+			for(user_rating in toilet.ratings){
+				if(toilet.ratings[user_rating].rating > 0){
+					sum += parseInt(toilet.ratings[user_rating].rating);
+					no_of_ratings++;					
+				}
+			}
+			console.log(sum+" "+no_of_ratings);
+			toilet.overall_rating = (sum/no_of_ratings).toFixed(1);
 		}
 
 		//Adding users who edited the document
 		var edited_by = {
 			userId : req.user._id,
-			time : Date.now();
+			time : Date.now()
 		}
 
 		if(edited_by){
@@ -150,28 +170,8 @@ exports.deleteToilet = function(req, res){
 		if(err)
 			res.send(err);
 
-		res.json(message: "Toilet removed from the database")
+		res.json({message: "Toilet removed from the database"});
 	});
 }
-
-//Create endpoint for /api/toilets/:toilet_id/addRating
-exports.addRating = function(req, res){
-	//Adding a rating to a toilet
-		var rating = {
-			userId : req.user._id,
-			comment : req.body.comment,
-			rating : req.body.rating
-		}
-
-		Toilet.addRatings(req.params.toilet_id, rating, function(error, docs){
-			Toilet.findById(req.params.toilet_id, function(err, toilet){
-				if(err)
-					res.send(err)
-
-				res.json(toilet);
-			});
-		});
-}
-
 
 

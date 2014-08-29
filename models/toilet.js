@@ -48,7 +48,7 @@ var Hours = new mongoose.Schema({
 });
 
 //Adding ratings to the toilet
-ToiletSchema.prototype.addRatings  = function(toiletId, rating, callback){
+ToiletSchema.methods.addRatings  = function(toiletId, rating, callback){
 	this.findById(toiletId, function(error, toilet){
 		if(error){
 			callback(error);
