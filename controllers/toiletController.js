@@ -67,7 +67,7 @@ exports.getToilets = function(req, res){
 exports.getNearby = function(req, res){
 	var lat = req.query.lat;
 	var lng = req.query.lng;
-	var query = Toilet.find({loc : {'$near': [lng. lat]}});
+	var query = Toilet.find({loc : {'$near': [lng, lat]}});
 	query.limit(5);
 
 	query.exec(function(err, toilets){
